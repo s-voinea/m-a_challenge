@@ -1,0 +1,6 @@
+pandas>=2.2
+numpy>=1.26
+scikit-learn>=1.4
+openpyxl>=3.1
+google-re2>=1.1   # optional: ~10x faster keyword matching; falls back to stdlib re
+pytest>=8
