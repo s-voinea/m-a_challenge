@@ -24,3 +24,22 @@ The dataset used in this project (`trans50m_2k18.xlsx`) contains all publicly an
 ## Reproducing
 
 To run the notebook, place a file matching this schema in `data/trans50m_2k18.xlsx`. Equivalent datasets can be exported from S&P Capital IQ or similar M&A databases.
+
+## Signal pipeline (`ma_signals/`)
+
+```bash
+pip install -r requirements.txt
+python -m ma_signals data/trans50m_2k18.xlsx --out outputs/   # real data
+python -m ma_signals --synthetic --out outputs/                # dry run, no data needed
+python -m pytest -q
+```
+
+It writes the following to `outputs/`:
+- `report.md`
+- `deals_enriched.csv.gz` (sector + ~20 parsed deal features)
+- `sector_panel_monthly.csv`
+- `sector_signals_monthly.csv` (market-neutral flow surprise, momentum, composition z-scores, `heat`)
+- `flow_change_correlation.csv`
+- `llm_labeling_queue.csv` (≈400 deals to label, then re-run with `--gold labels.csv`)
+
+The method, and a review of known artifacts in the exploratory notebook, are in [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md).
